@@ -1,0 +1,104 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "a3dbench-evaluate-forward-models"
+version = "0.1.0"
+description = "A3D-Bench evaluation and fine-tuning framework for feed-forward UAV 3D reconstruction"
+readme = "README.md"
+authors = [{ name = "A3D-Bench Authors" }]
+license = { file = "LICENSE" }
+requires-python = ">=3.10.0"
+dependencies = [
+    "huggingface_hub",
+    "hydra-core",
+    "natsort",
+    "opencv-python-headless==4.10.0.84",
+    "orjson",
+    "pillow-heif",
+    "plyfile",
+    "python-box",
+    "requests",
+    "rerun-sdk~=0.24.1",
+    "safetensors",
+    "tensorboard",
+    "tqdm",
+    "trimesh",
+    "uniception==0.1.6",
+    "fastapi>=0.110,<1",
+    "pydantic>=2.7,<3",
+    "pydantic-core>=2.27,<3",
+    "starlette>=0.37,<1",
+]
+
+[project.optional-dependencies]
+data = ["pandas"]
+dev = ["pre-commit", "pytest", "pytest-cov", "ruff"]
+
+mapabase = ["mapa-base @ file:third_party/mapabase"]
+lightglue = ["lightglue @ git+https://github.com/cvg/LightGlue.git"]
+
+colmap = [
+    "lightglue @ git+https://github.com/cvg/LightGlue.git",
+    "open3d",
+    "pycolmap==3.10.0",
+]
+
+gradio = ["gradio==5.47.2", "spaces"]
+radio = ["timm"]
+
+# External models for benchmarking. Most projects are installed from upstream Git.
+# Modified local forks are kept under third_party and installed from local paths.
+anycalib = ["anycalib @ git+https://github.com/javrtg/AnyCalib.git@main#egg=anycalib"]
+
+dust3r = [
+    "croco @ git+https://github.com/naver/croco.git@croco_module#egg=croco",
+    "dust3r @ git+https://github.com/naver/dust3r.git@dust3r_setup#egg=dust3r",
+]
+
+mast3r = ["mast3r @ git+https://github.com/Nik-V9/mast3r.git@main#egg=mast3r"]
+must3r = ["must3r @ git+https://github.com/naver/must3r.git@main#egg=must3r"]
+pi3 = ["pi3 @ git+https://github.com/yyfz/Pi3.git@main#egg=pi3"]
+pow3r = ["pow3r @ git+https://github.com/Nik-V9/pow3r.git@main#egg=pow3r"]
+depth-anything-3 = ["depth-anything-3 @ file:third_party/depth-anything-3"]
+
+rmvd = ["rmvd @ git+https://github.com/infinity1096/robustmvd.git@master#egg=rmvd"]
+hunyuanworld-mirror = ["hunyuanworld-mirror @ file:third_party/HunyuanWorld-Mirror"]
+
+# Install all optional dependencies
+all = [
+    "a3dbench-evaluate-forward-models[anycalib]",
+    "a3dbench-evaluate-forward-models[colmap]",
+    "a3dbench-evaluate-forward-models[data]",
+    "a3dbench-evaluate-forward-models[depth-anything-3]",
+    "a3dbench-evaluate-forward-models[dev]",
+    "a3dbench-evaluate-forward-models[dust3r]",
+    "a3dbench-evaluate-forward-models[gradio]",
+    "a3dbench-evaluate-forward-models[hunyuanworld-mirror]",
+    "a3dbench-evaluate-forward-models[mapabase]",
+    "a3dbench-evaluate-forward-models[mast3r]",
+    "a3dbench-evaluate-forward-models[must3r]",
+    "a3dbench-evaluate-forward-models[pi3]",
+    "a3dbench-evaluate-forward-models[pow3r]",
+    "a3dbench-evaluate-forward-models[radio]",
+    "a3dbench-evaluate-forward-models[rmvd]",
+]
+
+# Setuptools configuration
+[tool.setuptools]
+packages = ["mapanything"]
+
+[tool.setuptools.package-data]
+"mapanything" = ["**/*"]
+
+[tool.ruff]
+lint.extend-select = ["I"]
+target-version = "py310"
+
+[tool.ruff.lint.isort]
+case-sensitive = false
+combine-as-imports = true
+detect-same-package = false
+order-by-type = false
+known-first-party = ["mapanything", "uniception"]
