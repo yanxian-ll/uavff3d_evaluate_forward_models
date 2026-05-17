@@ -1,179 +1,134 @@
-# A3D-Bench Evaluate Forward Models
+# UAVFF3D Fine-tuning and Evaluation Code
 
-Code release for **A3D-Bench: A Geometry-Aware Benchmark for Feed-Forward UAV 3D Reconstruction**.
+This repository contains the fine-tuning and evaluation code used for **UAVFF3D: A Geometry-Aware Benchmark for Feed-Forward UAV 3D Reconstruction**.
 
-This repository contains the evaluation and fine-tuning framework used for A3D-Bench. It is adapted from
-[MapAnything](https://github.com/facebookresearch/map-anything) and keeps the original `mapanything` Python package
-name so that existing configs, imports, and wrappers remain compatible.
+The code is based on the MapAnything training and benchmarking framework and keeps the components needed to reproduce the UAVFF3D experiments: UAV-domain fine-tuning, dense N-view evaluation with shared scene-level alignment, and wrappers for MapAnything, VGGT, Pi3, Pi3X, Depth Anything 3, and HunyuanWorld-Mirror.
 
-The code focuses on geometry-aware UAV evaluation:
-
-- real and synthetic UAV benchmark configs for A3D-Real, A3D-Syn, A3D-FA, UrbanScene3D, UseGeo, and ENRICH;
-- unified dense reconstruction metrics for depth, camera rays, poses, rotations, and point clouds;
-- fine-tuning scripts for MapAnything, VGGT, Pi3, and Pi3X under A3D training splits;
-- prior-aware evaluation for models that accept camera intrinsics, poses, or both;
-- wrappers for representative feed-forward reconstruction models.
-
-## Status
-
-This is the code framework for the paper release. Dataset download links, trained checkpoints, and the final citation
-will be added when the corresponding paper artifacts are public.
-
-## Repository Layout
+## What is included
 
 ```text
-assets/                         Figures and static assets used by docs
-bash_scripts/benchmark/         Benchmark launch scripts, including UAV dense N-view evaluation
-bash_scripts/train/             Fine-tuning and ablation launch scripts
-benchmarking/                   Benchmark entry points and adapters
-configs/                        Hydra configs for datasets, models, training, and evaluation
-data_processing/                WAI-format data processing utilities
-mapanything/                    Main package, adapted from MapAnything
-scripts/                        Utility scripts for checkpoints, visualization, and profiling
-third_party/                    Modified vendored projects plus optional external-project checkout area
-README_MapAnything.md           Original MapAnything README kept for provenance/reference
-THIRD_PARTY.md                  Third-party dependency and license notes
-NOTICE                          Attribution and derivative-work notice
+bash_scripts/
+  benchmark/uav_dense_n_view/     UAVFF3D dense N-view evaluation launchers
+  train/uav_finetuning/           UAV-domain fine-tuning launchers
+benchmarking/dense_n_view/        Shared-alignment dense N-view evaluator
+configs/                          Hydra configs for training, evaluation, models, and datasets
+mapanything/                      MapAnything-based training/evaluation framework and model wrappers
+scripts/train.py                  Training entry point
+third_party/
+  HunyuanWorld-Mirror/            Vendored HunyuanWorld-Mirror adapter dependency
+  depth-anything-3/               Vendored Depth Anything 3 adapter dependency
 ```
+
+Unrelated MapAnything demos, profiling scripts, calibration benchmarks, RMVD benchmarks, and unrelated bash launchers were removed to make the release focused and easier to maintain.
+
+## Relationship to MapAnything
+
+This project reuses the MapAnything framework for data loading, Hydra configuration, training, and benchmarking. The UAVFF3D-specific parts are the dataset loaders, UAV-domain fine-tuning configurations, dense N-view evaluation launchers, and benchmark settings used in the paper.
+
+Please cite and follow the license of MapAnything when using this repository. See [`THIRD_PARTY.md`](THIRD_PARTY.md) for third-party license notes.
 
 ## Installation
 
+Create a Python environment, then install this project in editable mode:
+
 ```bash
-git clone https://github.com/yanxian-ll/a3dbench_evaluate_forward_models.git
-cd a3dbench_evaluate_forward_models
+conda create -n uavff3d python=3.10 -y
+conda activate uavff3d
 
-conda create -n a3dbench python=3.12 -y
-conda activate a3dbench
-
-# Install PyTorch for your CUDA / driver setup.
-# Example for CUDA 12.1:
-pip install torch==2.4 torchvision torchaudio
-pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cu121 "xformers==0.0.27.post2"
-
-# Install the base framework.
+# Install PyTorch separately for your CUDA version, then:
 pip install -e .
-
-# Optional: install all external-model extras.
-pip install -e ".[all]"
-
-# Optional developer tools.
-pre-commit install
 ```
 
-The optional extras use upstream Git repositories for external projects where possible. The modified local copies of
-`mapabase`, `depth-anything-3`, and `HunyuanWorld-Mirror` are kept under `third_party/` and installed from those local
-paths.
-
-## Third-Party Code Policy
-
-Only the following modified projects are vendored in this repository:
-
-- `third_party/mapabase`
-- `third_party/depth-anything-3`
-- `third_party/HunyuanWorld-Mirror`
-
-Other third-party projects are treated as external dependencies and are installed through `pyproject.toml` extras or
-checked out only for local development. See [THIRD_PARTY.md](THIRD_PARTY.md) and [third_party/README.md](third_party/README.md).
-
-If you need local source checkouts for debugging external wrappers, run:
+Install optional model dependencies as needed:
 
 ```bash
-bash git_third_party.sh
+# Depth Anything 3 and HunyuanWorld-Mirror wrappers use the vendored local copies.
+pip install -e .[da3,hunyuan]
+
+# Development tools.
+pip install -e .[dev]
 ```
 
-Those external checkouts are ignored by git.
+The VGGT, Pi3, and Pi3X adapters used here are integrated under `mapanything/models/external/` in the same style as the submitted codebase.
 
-## A3D UAV Evaluation
+## Data layout
 
-Most paper evaluation scripts live under:
+Set the dataset paths in `configs/machine/aws.yaml` or create a new machine config under `configs/machine/`.
+
+The expected top-level dataset layout is:
 
 ```text
-bash_scripts/benchmark/uav_dense_n_view/
+${root_data_dir}/
+  UAVFF3D-Real/
+  UAVFF3D-Syn-L/
+  UAVFF3D-Syn-S/
+  UAVFF3D-FA/
+  BlendedMVS/
+  UAVScenes/
+  WHU-WHUOMVS/
+  UseGeo/
+  UrbanScene3D/
+  ENRICH/
+  metadata/
 ```
 
-Examples:
+The metadata directory should contain the scene lists and HFOV metadata referenced by the dataset configs.
+
+## Fine-tuning
+
+Fine-tuning launchers are in `bash_scripts/train/uav_finetuning/`.
+
+Example:
 
 ```bash
-# MapAnything, image-only
-bash bash_scripts/benchmark/uav_dense_n_view/mapa/mapa.sh
-
-# MapAnything with camera intrinsics and pose priors
-bash bash_scripts/benchmark/uav_dense_n_view/mapa/mapa_cp.sh
-
-# A3D-fine-tuned Pi3X with camera intrinsics
-bash bash_scripts/benchmark/uav_dense_n_view/pi3x/pi3x_ft_c.sh
-
-# HunyuanWorld-Mirror with camera pose priors
-bash bash_scripts/benchmark/uav_dense_n_view/hy/hunyuan_p.sh
+bash bash_scripts/train/uav_finetuning/mapa_finetuning_8v_6d_16ipg_2g_mvs.sh 2
 ```
 
-Before running, update machine paths in `configs/machine/*.yaml` and dataset roots in the relevant dataset configs.
-The main A3D-related benchmark configs include:
+The first argument is the number of GPUs. Scripts default to one GPU if no argument is supplied.
 
-- `configs/dataset/benchmark_518_a3d_enrich_usegeo_us3d.yaml`
-- `configs/dataset/benchmark_518_a3dsynlfa.yaml`
-- `configs/dense_n_view_benchmark.yaml`
+The main training mixtures are:
 
-## Fine-Tuning
+- `uavtrain_6d_518_many_ar_16ipg_2g`: full UAVFF3D training mix
+- `uavtrain_public_518_many_ar_16ipg_2g`: public-data-only ablation
+- `uavtrain_uavff3d_real_518_many_ar_16ipg_2g`: UAVFF3D-Real ablation
+- `uavtrain_uavff3d_syn_518_many_ar_16ipg_2g`: UAVFF3D-Syn ablation
 
-A3D fine-tuning scripts are in:
+## Dense N-view evaluation
 
-```text
-bash_scripts/train/uav_finetuning/
-bash_scripts/train/ablations/a3d_dataset/
-```
+Evaluation launchers are in `bash_scripts/benchmark/uav_dense_n_view/`.
 
-Examples:
+Example:
 
 ```bash
-# MapAnything fine-tuning with the full A3D mixture
-bash bash_scripts/train/uav_finetuning/mapa_finetuning_8v_6d_16ipg_2g_mvs.sh
-
-# VGGT fine-tuning on A3D-Syn
-bash bash_scripts/train/uav_finetuning/vggt_finetuning_8v_6d_16ipg_2g_a3dsyn.sh
-
-# Dataset ablation: A3D full mixture
-bash bash_scripts/train/ablations/a3d_dataset/a3d_all.sh
+bash bash_scripts/benchmark/uav_dense_n_view/mapa/mapa_ft.sh 0
 ```
 
-See [train.md](train.md) for the inherited MapAnything training workflow and the current training-config structure.
+The first argument is the CUDA device index. Evaluation uses:
 
-## Data
+```bash
+python3 benchmarking/dense_n_view/benchmark.py \
+  dataset=benchmark_518_uavff3d_enrich_usegeo_us3d \
+  model=mapanything \
+  model/task=images_only \
+  compute_abs_metrics=true
+```
 
-The framework uses the WAI-style scene representation inherited from MapAnything. A processed scene typically contains
-RGB images, camera intrinsics, camera poses, depth or rendered reference depth, masks, camera rays, and metadata. See
-[data_processing/README.md](data_processing/README.md) for conversion utilities and format details.
+The evaluator reports the metrics used in the paper, including ray error, pose ATE under shared scene-level alignment, AbsRel depth, rotation error, and Chamfer-L1.
 
-A3D-Bench dataset release links are not included yet. Until public data links are available, scripts assume local data
-roots configured in `configs/machine/*.yaml` and `configs/dataset/*`.
+## Checkpoints
+
+Place model checkpoints under `checkpoints/` or update `root_pretrained_checkpoints_dir` in the selected machine config. Fine-tuned checkpoints are expected under `${root_experiments_dir}/mapanything/uav_training/...` by the provided scripts.
+
+Use the conversion utility when a Hugging Face checkpoint needs to be converted into the benchmark checkpoint format:
+
+```bash
+python scripts/convert_hf_to_benchmark_checkpoint.py --help
+```
 
 ## License
 
-The Apache-2.0-covered framework code is released under [LICENSE](LICENSE). This repository is derived from
-MapAnything, whose public code is also Apache-2.0 licensed. See [NOTICE](NOTICE) for attribution.
-
-Third-party code, model weights, and datasets may use different licenses. In particular, `third_party/HunyuanWorld-Mirror`
-is governed by the Tencent HunyuanWorld-Mirror Community License Agreement included in that directory. See
-[THIRD_PARTY.md](THIRD_PARTY.md) before redistribution.
-
-This README is not legal advice; verify the relevant upstream licenses for your use case.
-
-## Acknowledgments
-
-This framework builds on [MapAnything](https://github.com/facebookresearch/map-anything). We also thank the authors and
-maintainers of Depth Anything 3, HunyuanWorld-Mirror, VGGT, Pi3/Pi3X, DUSt3R, MASt3R, MUSt3R, Pow3R, MoGe, AnyCalib,
-LightGlue, RobustMVD, WAI, and the datasets used by A3D-Bench.
+The main project code is released under the Apache License 2.0. Third-party code, checkpoints, and datasets may have different licenses. In particular, the vendored copies of HunyuanWorld-Mirror and Depth Anything 3 remain governed by their upstream licenses. See [`THIRD_PARTY.md`](THIRD_PARTY.md) and [`NOTICE`](NOTICE).
 
 ## Citation
 
-If you use this repository, please cite the A3D-Bench paper once the final bibliographic entry is available. Temporary
-placeholder:
-
-```bibtex
-@misc{a3dbench2026,
-  title  = {A3D-Bench: A Geometry-Aware Benchmark for Feed-Forward UAV 3D Reconstruction},
-  author = {A3D-Bench Authors},
-  year   = {2026},
-  note   = {Code and benchmark framework}
-}
-```
+If you use this code, please cite the UAVFF3D paper and the relevant upstream projects, including MapAnything and any evaluated model wrappers you use.

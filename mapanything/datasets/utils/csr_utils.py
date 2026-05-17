@@ -484,7 +484,7 @@ def _tree_sampling_csr(
             nbrs, w_eff = _get_effective_neighbors(
                 g,
                 cur,
-                visited=None,  # trunk 自己手动做 visited / global max 约束
+                visited=None,  # The trunk applies visited and global max constraints manually.
                 min_covis=min_covis,
                 max_covis=max_covis,
                 topk_step=topk_step,
@@ -499,11 +499,11 @@ def _tree_sampling_csr(
             for j in order:
                 cand = int(nbrs[j])
 
-                # 1) 不能重复
+                # 1) Avoid duplicates.
                 if cand in visited:
                     continue
 
-                # 2) 类似 greedy_chain，加一个全局 max_covis 去冗余约束
+                # 2) As in greedy_chain, add a global max-covisibility constraint to reduce redundancy.
                 if (max_covis is not None) and (len(walk) >= 2):
                     ok = True
                     for u in walk:
@@ -527,7 +527,7 @@ def _tree_sampling_csr(
             cur = chosen
 
         # ---------- step 2: expand branches ----------
-        # 以 trunk + 后续加入节点为父节点队列，BFS 风格向外长分支
+        # Use the trunk and subsequently added nodes as the parent queue, expanding branches in BFS style.
         queue = list(walk)
         qi = 0
 

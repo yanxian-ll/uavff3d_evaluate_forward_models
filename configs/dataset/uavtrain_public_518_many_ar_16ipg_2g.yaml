@@ -1,0 +1,26 @@
+defaults:
+  - default
+
+num_views: 4
+
+train:
+  variable_num_views: true
+  use_hfov_balanced_sampling: true
+
+resolution_train: ${dataset.resolution_options.518_many_ar}
+resolution_val_blendedmvs: ${dataset.resolution_options.518_1_33_ar}
+resolution_val_usegeo: ${dataset.resolution_options.518_1_33_ar}
+resolution_val_urbanscene3d: ${dataset.resolution_options.518_1_33_ar}
+resolution_val_enrich: ${dataset.resolution_options.518_1_33_ar}
+
+# Public-only ablation used in the UAVFF3D paper: BlendedMVS + public UAV datasets.
+train_dataset:
+  "+ 23_000 @ ${dataset.blendedmvs_wai.train.dataset_str}
+  + 2_000 @ ${dataset.uavscenes_wai.train.dataset_str}
+  + 1_000 @ ${dataset.whu_whuomvs_wai.train.dataset_str}"
+
+test_dataset:
+   "+ 500 @ ${dataset.blendedmvs_wai.val.dataset_str}
+   + 500 @ ${dataset.usegeo_wai.val.dataset_str}
+   + 100 @ ${dataset.urbanscene3d_wai.val.dataset_str}
+   + 100 @ ${dataset.enrich_wai.val.dataset_str}"

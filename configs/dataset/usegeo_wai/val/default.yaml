@@ -12,9 +12,9 @@ dataset_str:
     variable_num_views=${dataset.usegeo_wai.val.variable_num_views},
     num_views=${dataset.usegeo_wai.val.num_views},
     covisibility_thres=${dataset.usegeo_wai.val.covisibility_thres},
-    covisibility_thres_max=${dataset.a3dsynl_wai.val.covisibility_thres_max},
-    sampling_mode='${dataset.a3dsynl_wai.val.sampling_mode}',
-    load_modalities=${dataset.a3dsynl_wai.val.load_modalities},)"
+    covisibility_thres_max=${dataset.uavff3d_syn_large_wai.val.covisibility_thres_max},
+    sampling_mode='${dataset.uavff3d_syn_large_wai.val.sampling_mode}',
+    load_modalities=${dataset.uavff3d_syn_large_wai.val.load_modalities},)"
     
 split: 'val'
 dataset_resolution: ${dataset.resolution_val_usegeo}

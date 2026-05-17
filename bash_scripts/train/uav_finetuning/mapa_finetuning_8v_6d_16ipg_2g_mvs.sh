@@ -5,17 +5,17 @@
 # This source code is licensed under the Apache License, Version 2.0
 # found in the LICENSE file in the root directory of this source tree.
 
-# 
-# pkill -f python
+# Number of GPUs used by torchrun. Defaults to one GPU.
+NUM_GPUS=${1:-1}
 
-NUM_GPUS=$1
-
-# Logging Configs
+# Runtime logging settings
 export HYDRA_FULL_ERROR=1
 export NCCL_DEBUG=INFO
-module load cuda/12.4 nccl/2.18.3-cuda.12.1 nccl_efa/1.24.1-nccl.2.18.3-cuda.12.0 libfabric-aws/2.1.0amzn5.0 openmpi5/5.0.6
+if command -v module >/dev/null 2>&1; then
+    module load cuda/12.4 nccl/2.18.3-cuda.12.1 nccl_efa/1.24.1-nccl.2.18.3-cuda.12.0 libfabric-aws/2.1.0amzn5.0 openmpi5/5.0.6 || true
+fi
 
-# AWS Multi-Node Configs
+# Distributed runtime settings. Override these in your cluster launcher if needed.
 export OMP_NUM_THREADS=24
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 export FI_PROVIDER=efa
@@ -25,7 +25,7 @@ export FI_EFA_SET_CUDA_SYNC_MEMOPS=0
 export NCCL_BUFFSIZE=8388608
 export NCCL_P2P_NET_CHUNKSIZE=524288
 
-# batch size 32
+# Launch UAVFF3D fine-tuning.
 torchrun --nproc_per_node ${NUM_GPUS} \
     scripts/train.py \
     machine=aws \

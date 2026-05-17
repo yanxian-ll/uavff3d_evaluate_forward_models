@@ -29,10 +29,10 @@ from mapanything.utils.train_tools import get_rank, get_world_size
 from mapanything.datasets.wai.whu_whuomvs import WHUWHUOMVSWAI # noqa
 from mapanything.datasets.wai.uavscenes import UAVScenesWAI # noqa
 # from mapanything.datasets.wai.ortholoc import OrthoLocWAI # noqa
-from mapanything.datasets.wai.a3dreal import A3DRealWAI       # noqa
-from mapanything.datasets.wai.a3dsynl import A3DSynLargeWAI   # noqa
-from mapanything.datasets.wai.a3dsynl_fa import A3DSynLargeFAWAI   # noqa
-from mapanything.datasets.wai.a3dsyns import A3DSynSmallWAI   # noqa
+from mapanything.datasets.wai.uavff3d_real import UAVFF3DRealWAI       # noqa
+from mapanything.datasets.wai.uavff3d_syn_large import UAVFF3DSynLargeWAI   # noqa
+from mapanything.datasets.wai.uavff3d_fa import UAVFF3DFAWAI   # noqa
+from mapanything.datasets.wai.uavff3d_syn_small import UAVFF3DSynSmallWAI   # noqa
 from mapanything.datasets.wai.usegeo import UseGeoWAI # noqa
 from mapanything.datasets.wai.urbanscene3d import UrbanScene3DWAI # noqa
 from mapanything.datasets.wai.enrich import ENRICHWAI # noqa

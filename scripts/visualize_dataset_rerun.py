@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Headless Rerun exporter for an A3D/WAI-style dataset.
+Headless Rerun exporter for an UAVFF3D/WAI-style dataset.
 
 Dataset layout:
     dataset_root/
@@ -27,16 +27,16 @@ What each .rrd logs:
   - world/cameras/frustums/view_xxxx: optional pinhole frustums
 
 Remote usage:
-    python visualize_a3d_dataset_rerun.py \
-      --dataset_root /path/to/A3D-Syn-S \
-      --output_dir experiments/dataset_viz/A3D-Syn-S \
+    python visualize_uavff3d_dataset_rerun.py \
+      --dataset_root /path/to/UAVFF3D-Syn-S \
+      --output_dir experiments/dataset_viz/UAVFF3D-Syn-S \
       --max_point_views 80 \
       --max_side 960 \
       --target_points 800000 \
       --show_traj
 
 Open one result locally:
-    rerun experiments/dataset_viz/A3D-Syn-S/<scene_name>.rrd
+    rerun experiments/dataset_viz/UAVFF3D-Syn-S/<scene_name>.rrd
 """
 
 from __future__ import annotations
@@ -729,7 +729,7 @@ def send_clean_screenshot_blueprint(args: argparse.Namespace) -> None:
         blueprint = rrb.Blueprint(
             rrb.Spatial3DView(
                 origin="/world",
-                name="A3D Scene",
+                name="UAVFF3D Scene",
                 background=list(args.background),
                 line_grid=line_grid,
             ),
@@ -744,7 +744,7 @@ def send_clean_screenshot_blueprint(args: argparse.Namespace) -> None:
 # -----------------------------------------------------------------------------
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Export every A3D/WAI-style scene under a dataset root to separate Rerun .rrd files."
+        description="Export every UAVFF3D/WAI-style scene under a dataset root to separate Rerun .rrd files."
     )
     parser.add_argument("--dataset_root", type=str, required=True,
                         help="Dataset root containing multiple scene folders.")
@@ -807,7 +807,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--default_height", type=int, default=480,
                         help="Fallback image height for Pinhole frustums when camera txt lacks h/w.")
 
-    parser.add_argument("--app_id", type=str, default="visualize_a3d_dataset_rerun")
+    parser.add_argument("--app_id", type=str, default="visualize_uavff3d_dataset_rerun")
     parser.add_argument("--time_sequence", type=int, default=0)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--save_ply_dir", type=str, default="",
@@ -912,12 +912,12 @@ if __name__ == "__main__":
 
 """
 
-python scripts/visualize_dataset_rerun.py --dataset_root /opt/data/private/dataset/data/A3D-Syn-S \
-    --show_frustum --output_dir experiments/dataset_viz/A3D-Syn-S
+python scripts/visualize_dataset_rerun.py --dataset_root /opt/data/private/dataset/data/UAVFF3D-Syn-S \
+    --show_frustum --output_dir experiments/dataset_viz/UAVFF3D-Syn-S
 
-python scripts/visualize_dataset_rerun.py --dataset_root /opt/data/private/dataset/data/A3D-Syn-L \
-    --show_frustum --output_dir experiments/dataset_viz/A3D-Syn-L
+python scripts/visualize_dataset_rerun.py --dataset_root /opt/data/private/dataset/data/UAVFF3D-Syn-L \
+    --show_frustum --output_dir experiments/dataset_viz/UAVFF3D-Syn-L
 
-python scripts/visualize_dataset_rerun.py --dataset_root /opt/data/private/dataset/data/A3D-Real \
-    --show_frustum --output_dir experiments/dataset_viz/A3D-Real
+python scripts/visualize_dataset_rerun.py --dataset_root /opt/data/private/dataset/data/UAVFF3D-Real \
+    --show_frustum --output_dir experiments/dataset_viz/UAVFF3D-Real
 """

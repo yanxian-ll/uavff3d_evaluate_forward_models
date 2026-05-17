@@ -733,7 +733,7 @@ class Pi3X(nn.Module, PyTorchModelHubMixin):
         Raises:
             ValueError: If the method is not 'median' or 'mean'.
         """
-        # 确保输入是 torch.Tensor
+        # Ensure the input is a torch.Tensor.
         if not isinstance(depths, torch.Tensor):
             depths = torch.tensor(depths, dtype=torch.float32)
 

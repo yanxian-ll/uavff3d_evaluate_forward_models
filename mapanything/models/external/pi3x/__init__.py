@@ -165,7 +165,7 @@ class Pi3XWrapper(torch.nn.Module):
         if has_nonzero_prior_prob and cam_prob > 0.0 and _all_have(views, "camera_pose"):
             poses = _stack_views(views, "camera_pose", device=device)
 
-            # pose prior 在 Pi3X 里要求 rays/intrinsics 一起存在
+            # Pi3X requires rays/intrinsics to be present when pose priors are used.
             if intrinsics is None and _all_have(views, "camera_intrinsics"):
                 intrinsics = _stack_views(views, "camera_intrinsics", device=device)
 

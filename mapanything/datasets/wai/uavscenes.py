@@ -10,9 +10,9 @@ import cv2
 import numpy as np
 
 from mapanything.datasets.base.base_dataset import BaseDataset
-from mapanything.datasets.wai.a3dreal import A3DRealWAI
+from mapanything.datasets.wai.uavff3d_real import UAVFF3DRealWAI
 
-class UAVScenesWAI(A3DRealWAI):
+class UAVScenesWAI(UAVFF3DRealWAI):
     """
     UAVScenes dataset containing object-centric and birds-eye-view scenes.
     """

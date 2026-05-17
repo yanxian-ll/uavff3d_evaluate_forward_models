@@ -142,44 +142,15 @@ def init_model_from_config(
 
 # Define model configurations with import paths
 MODEL_CONFIGS = {
-    # Core models
-    "mapanything": {
-        "class": MapAnything,
-    },
-    "mapanything_ablations": {
-        "class": MapAnythingAblations,
-    },
-    "modular_dust3r": {
-        "class": ModularDUSt3R,
-    },
-    # External models
-    "anycalib": {
-        "module": "mapanything.models.external.anycalib",
-        "class_name": "AnyCalibWrapper",
-    },
-    "da3": {
-        "module": "mapanything.models.external.da3",
-        "class_name": "DA3Wrapper",
-    },
-    "da3_train": {
-        "module": "mapanything.models.external.da3_train",
-        "class_name": "DA3Wrapper",
-    },
-    "dust3r": {
-        "module": "mapanything.models.external.dust3r",
-        "class_name": "DUSt3RBAWrapper",
-    },
-    "mast3r": {
-        "module": "mapanything.models.external.mast3r",
-        "class_name": "MASt3RSGAWrapper",
-    },
-    "moge": {
-        "module": "mapanything.models.external.moge",
-        "class_name": "MoGeWrapper",
-    },
-    "must3r": {
-        "module": "mapanything.models.external.must3r",
-        "class_name": "MUSt3RWrapper",
+    # Core MapAnything models retained for UAVFF3D fine-tuning.
+    "mapanything": {"class": MapAnything},
+    "mapanything_ablations": {"class": MapAnythingAblations},
+    "modular_dust3r": {"class": ModularDUSt3R},
+
+    # External feed-forward reconstruction models evaluated by the UAVFF3D project.
+    "vggt": {
+        "module": "mapanything.models.external.vggt",
+        "class_name": "VGGTWrapper",
     },
     "pi3": {
         "module": "mapanything.models.external.pi3",
@@ -189,19 +160,14 @@ MODEL_CONFIGS = {
         "module": "mapanything.models.external.pi3x",
         "class_name": "Pi3XWrapper",
     },
-    "pow3r": {
-        "module": "mapanything.models.external.pow3r",
-        "class_name": "Pow3RWrapper",
+    "da3": {
+        "module": "mapanything.models.external.da3",
+        "class_name": "DA3Wrapper",
     },
-    "pow3r_ba": {
-        "module": "mapanything.models.external.pow3r",
-        "class_name": "Pow3RBAWrapper",
+    "da3_train": {
+        "module": "mapanything.models.external.da3_train",
+        "class_name": "DA3Wrapper",
     },
-    "vggt": {
-        "module": "mapanything.models.external.vggt",
-        "class_name": "VGGTWrapper",
-    },
-    # Add other model classes here
     "hunyuan": {
         "module": "mapanything.models.external.hunyuan",
         "class_name": "HunyuanWrapper",
@@ -211,7 +177,6 @@ MODEL_CONFIGS = {
         "class_name": "HunyuanWrapper",
     },
 }
-
 
 def check_module_exists(module_path):
     """

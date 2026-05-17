@@ -7,12 +7,14 @@
 
 NUM_GPUS=$1
 
-# Logging Configs
+# Runtime logging settings
 export HYDRA_FULL_ERROR=1
 export NCCL_DEBUG=INFO
-module load cuda/12.4 nccl/2.18.3-cuda.12.1 nccl_efa/1.24.1-nccl.2.18.3-cuda.12.0 libfabric-aws/2.1.0amzn5.0 openmpi5/5.0.6
+if command -v module >/dev/null 2>&1; then
+    module load cuda/12.4 nccl/2.18.3-cuda.12.1 nccl_efa/1.24.1-nccl.2.18.3-cuda.12.0 libfabric-aws/2.1.0amzn5.0 openmpi5/5.0.6 || true
+fi
 
-# AWS Multi-Node Configs
+# Distributed runtime settings. Override these in your cluster launcher if needed.
 export OMP_NUM_THREADS=24
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 export FI_PROVIDER=efa

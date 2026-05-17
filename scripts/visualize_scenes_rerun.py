@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Headless Rerun exporter for one A3D/WAI-style scene.
+Headless Rerun exporter for one UAVFF3D/WAI-style scene.
 
 Input scene layout:
     scene_root/
@@ -28,7 +28,7 @@ What it logs to Rerun:
   - world/cameras/frustums/view_xxx: optional pinhole frustums
 
 Typical remote usage:
-    python visualize_a3d_scene_rerun.py \
+    python visualize_uavff3d_scene_rerun.py \
       --scene /path/to/scene \
       --save_rrd /path/to/out.rrd \
       --max_point_views 80 \
@@ -561,7 +561,7 @@ def maybe_log_selected_images(
 # -----------------------------------------------------------------------------
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Export an A3D/WAI-style scene to a headless Rerun .rrd visualization."
+        description="Export an UAVFF3D/WAI-style scene to a headless Rerun .rrd visualization."
     )
     parser.add_argument("--scene", type=str, required=True, help="Path to scene folder containing images/cams/depth.")
     parser.add_argument("--images_dir", type=str, default="images")
@@ -608,7 +608,7 @@ def parse_args() -> argparse.Namespace:
                         help="Fallback image height for Pinhole frustums when camera txt lacks h/w.")
 
     parser.add_argument("--save_rrd", type=str, default="", help="Output .rrd path. Default: <scene_name>.rrd")
-    parser.add_argument("--app_id", type=str, default="visualize_a3d_scene_rerun")
+    parser.add_argument("--app_id", type=str, default="visualize_uavff3d_scene_rerun")
     parser.add_argument("--time_sequence", type=int, default=0)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--save_ply", type=str, default="", help="Optional path to save final voxelized point cloud as .ply.")
@@ -722,8 +722,8 @@ if __name__ == "__main__":
 """
 
 python scripts/visualize_scenes_rerun.py \
-    --scene /opt/data/private/dataset/data/A3D-Syn-L/5e1ed8ee3c7f5951664de02c \
+    --scene /opt/data/private/dataset/data/UAVFF3D-Syn-L/5e1ed8ee3c7f5951664de02c \
     --show_frustum \
-    --save_rrd experiments/dataset_viz/A3D-Syn-FA/5e1ed8ee3c7f5951664de02c.rrd
+    --save_rrd experiments/dataset_viz/UAVFF3D-Syn-FA/5e1ed8ee3c7f5951664de02c.rrd
 
 """

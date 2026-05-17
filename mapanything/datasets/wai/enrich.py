@@ -5,10 +5,10 @@ enrich Dataset using WAI format data.
 import os
 import numpy as np
 
-from mapanything.datasets.wai.a3dreal import A3DRealWAI
+from mapanything.datasets.wai.uavff3d_real import UAVFF3DRealWAI
 
 
-class ENRICHWAI(A3DRealWAI):
+class ENRICHWAI(UAVFF3DRealWAI):
     """
     enrich dataset containing object-centric and birds-eye-view scenes.
     """

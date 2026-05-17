@@ -15,7 +15,7 @@ dataset_str:
     covisibility_thres_max=${dataset.enrich_wai.train.covisibility_thres_max},
     sampling_mode='${dataset.enrich_wai.train.sampling_mode}',
     load_modalities=${dataset.enrich_wai.train.load_modalities},
-    use_hfov_balanced_sampling=${dataset.a3dsynl_wai.train.use_hfov_balanced_sampling},)"
+    use_hfov_balanced_sampling=${dataset.uavff3d_syn_large_wai.train.use_hfov_balanced_sampling},)"
     
 split: 'train'
 dataset_resolution: ${dataset.resolution_train}

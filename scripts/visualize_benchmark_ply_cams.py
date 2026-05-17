@@ -478,36 +478,36 @@ if __name__ == "__main__":
 """
 
 python3 scripts/visualize_benchmark_ply_cams.py \
-    "experiments/mapanything/benchmarking_focal_ambiguilty/da3/ 64 @ A3DSynLargeFAWAI_fused_ply/e1b883efa2b8768cfab20347/e1b883efa2b8768cfab20347_set000_bundle.json" \
+    "experiments/mapanything/benchmarking_focal_ambiguilty/da3/ 64 @ UAVFF3DFAWAI_fused_ply/e1b883efa2b8768cfab20347/e1b883efa2b8768cfab20347_set000_bundle.json" \
     --save_rrd "experiments/mapanything/benchmarking_focal_ambiguilty/da3/rrd/e1b883efa2b8768cfab20347.rrd"
 
 python3 scripts/visualize_benchmark_ply_cams.py \
-    "experiments/mapanything/benchmarking_focal_ambiguilty/da3/ 64 @ A3DSynLargeFAWAI_fused_ply/71040e8faffc08ba7082b029/71040e8faffc08ba7082b029_set000_bundle.json" \
+    "experiments/mapanything/benchmarking_focal_ambiguilty/da3/ 64 @ UAVFF3DFAWAI_fused_ply/71040e8faffc08ba7082b029/71040e8faffc08ba7082b029_set000_bundle.json" \
     --save_rrd "experiments/mapanything/benchmarking_focal_ambiguilty/da3/rrd/71040e8faffc08ba7082b029.rrd"
 
 
 python3 scripts/visualize_benchmark_ply_cams.py \
-    "experiments/mapanything/benchmarking_focal_ambiguilty/da3/ 64 @ A3DSynLargeFAWAI_fused_ply/fa73d296a111a7e3e973f237/fa73d296a111a7e3e973f237_set000_bundle.json" \
+    "experiments/mapanything/benchmarking_focal_ambiguilty/da3/ 64 @ UAVFF3DFAWAI_fused_ply/fa73d296a111a7e3e973f237/fa73d296a111a7e3e973f237_set000_bundle.json" \
     --save_rrd "experiments/mapanything/benchmarking_focal_ambiguilty/da3/rrd/fa73d296a111a7e3e973f237.rrd"
 
 python3 scripts/visualize_benchmark_ply_cams.py \
-    "experiments/mapanything/benchmarking_focal_ambiguilty/da3/ 64 @ A3DSynLargeFAWAI_fused_ply/23dcba4dffe0c6bf0f59042e/23dcba4dffe0c6bf0f59042e_set000_bundle.json" \
+    "experiments/mapanything/benchmarking_focal_ambiguilty/da3/ 64 @ UAVFF3DFAWAI_fused_ply/23dcba4dffe0c6bf0f59042e/23dcba4dffe0c6bf0f59042e_set000_bundle.json" \
     --save_rrd "experiments/mapanything/benchmarking_focal_ambiguilty/da3/rrd/23dcba4dffe0c6bf0f59042e.rrd"
 
 python3 scripts/visualize_benchmark_ply_cams.py \
-    "experiments/mapanything/benchmarking_focal_ambiguilty/da3/ 64 @ A3DSynLargeFAWAI_fused_ply/179e2063c562a60e3308d99a/179e2063c562a60e3308d99a_set000_bundle.json" \
+    "experiments/mapanything/benchmarking_focal_ambiguilty/da3/ 64 @ UAVFF3DFAWAI_fused_ply/179e2063c562a60e3308d99a/179e2063c562a60e3308d99a_set000_bundle.json" \
     --save_rrd "experiments/mapanything/benchmarking_focal_ambiguilty/da3/rrd/179e2063c562a60e3308d99a.rrd"
 
 python3 scripts/visualize_benchmark_ply_cams.py \
-    "experiments/mapanything/benchmarking_focal_ambiguilty/da3/ 64 @ A3DSynLargeFAWAI_fused_ply/647ac219f9bf5eb6154d0f2b/647ac219f9bf5eb6154d0f2b_set000_bundle.json" \
+    "experiments/mapanything/benchmarking_focal_ambiguilty/da3/ 64 @ UAVFF3DFAWAI_fused_ply/647ac219f9bf5eb6154d0f2b/647ac219f9bf5eb6154d0f2b_set000_bundle.json" \
     --save_rrd "experiments/mapanything/benchmarking_focal_ambiguilty/da3/rrd/647ac219f9bf5eb6154d0f2b.rrd"
 
 python3 scripts/visualize_benchmark_ply_cams.py \
-    "experiments/mapanything/benchmarking_focal_ambiguilty/da3/ 64 @ A3DSynLargeFAWAI_fused_ply/3b6bb1e3910ef5b714da4f28/3b6bb1e3910ef5b714da4f28_set000_bundle.json" \
+    "experiments/mapanything/benchmarking_focal_ambiguilty/da3/ 64 @ UAVFF3DFAWAI_fused_ply/3b6bb1e3910ef5b714da4f28/3b6bb1e3910ef5b714da4f28_set000_bundle.json" \
     --save_rrd "experiments/mapanything/benchmarking_focal_ambiguilty/da3/rrd/3b6bb1e3910ef5b714da4f28.rrd"
 
 python3 scripts/visualize_benchmark_ply_cams.py \
-    "experiments/mapanything/benchmarking_focal_ambiguilty/da3/ 64 @ A3DSynLargeFAWAI_fused_ply/1cb8e5e8baf385a3cb2dcf9a/1cb8e5e8baf385a3cb2dcf9a_set000_bundle.json" \
+    "experiments/mapanything/benchmarking_focal_ambiguilty/da3/ 64 @ UAVFF3DFAWAI_fused_ply/1cb8e5e8baf385a3cb2dcf9a/1cb8e5e8baf385a3cb2dcf9a_set000_bundle.json" \
     --save_rrd "experiments/mapanything/benchmarking_focal_ambiguilty/da3/rrd/1cb8e5e8baf385a3cb2dcf9a.rrd"
 
 """

@@ -1,15 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.1.0
 
-- Reframed the repository as the A3D-Bench evaluation and fine-tuning framework.
-- Added A3D UAV benchmark and fine-tuning scripts/configs on top of the MapAnything framework.
-- Added wrappers and training/evaluation support for A3D experiments with MapAnything, VGGT, Pi3, Pi3X, Depth Anything 3,
-  and HunyuanWorld-Mirror.
-- Documented third-party handling: modified `mapabase`, `depth-anything-3`, and `HunyuanWorld-Mirror` are bundled; other
-  projects are external dependencies.
-
-## Provenance
-
-This repository is derived from MapAnything. The original MapAnything README is preserved as `README_MapAnything.md`
-for reference.
+- Curated the codebase for UAVFF3D paper fine-tuning and evaluation.
+- Kept UAV-specific bash launchers for dense N-view evaluation and fine-tuning.
+- Renamed all UAVFF3D references to UAVFF3D across code, configs, scripts, and documentation.
+- Preserved HunyuanWorld-Mirror and Depth Anything 3 under `third_party/` for the corresponding wrappers.
+- Removed unrelated demo, profiling, calibration, RMVD, and non-UAV benchmark launchers.
+- Added open-source documentation and third-party license notes.

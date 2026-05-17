@@ -11,17 +11,17 @@ export NUMEXPR_MAX_THREADS=16
 # If no cuda device is given, default to cuda_device=0
 CUDA_DEVICE=${1:-0}
 
-# batch size, views, dataset, seed
+# Each row contains: batch size, number of input views, Hydra dataset config, random seed.
 batch_sizes_and_views=(
-    "8 8 benchmark_518_a3d_enrich_usegeo_us3d 8"
-    "4 16 benchmark_518_a3d_enrich_usegeo_us3d 16"
-    # "2 24 benchmark_518_a3d_enrich_usegeo_us3d 24"
-    # "2 32 benchmark_518_a3d_enrich_usegeo_us3d 32"
+    "4 8 benchmark_518_uavff3d_enrich_usegeo_us3d 8"
+    "3 16 benchmark_518_uavff3d_enrich_usegeo_us3d 16"
+    "2 24 benchmark_518_uavff3d_enrich_usegeo_us3d 24"
+    "1 32 benchmark_518_uavff3d_enrich_usegeo_us3d 32"
 )
 
-# Loop through each combination
+# Run all requested view-count settings.
 for combo in "${batch_sizes_and_views[@]}"; do
-    # Split the string into batch_size and num_views
+    # Parse the row into shell variables.
     read -r batch_size num_views dataset seed <<< "$combo"
     
     echo "Running $dataset with batch_size=$batch_size and num_views=$num_views, seed=$seed"

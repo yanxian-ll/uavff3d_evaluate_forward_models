@@ -1,13 +1,13 @@
 # Benchmarking
 
-This directory contains benchmark entry points inherited from MapAnything and adapted for A3D-Bench evaluation.
+This directory contains benchmark entry points inherited from MapAnything and adapted for UAVFF3D evaluation.
 
-The A3D paper scripts primarily use:
+The UAVFF3D paper scripts primarily use:
 
 ```text
 bash_scripts/benchmark/uav_dense_n_view/
-configs/dataset/benchmark_518_a3d_enrich_usegeo_us3d.yaml
-configs/dataset/benchmark_518_a3dsynlfa.yaml
+configs/dataset/benchmark_518_uavff3d_enrich_usegeo_us3d.yaml
+configs/dataset/benchmark_518_uavff3d_fa.yaml
 configs/dense_n_view_benchmark.yaml
 ```
 

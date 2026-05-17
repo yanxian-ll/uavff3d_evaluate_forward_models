@@ -4,9 +4,9 @@ WHUMVS WHUOMVS Dataset using WAI format data.
 
 import os
 import numpy as np
-from mapanything.datasets.wai.a3dreal import A3DRealWAI
+from mapanything.datasets.wai.uavff3d_real import UAVFF3DRealWAI
 
-class WHUWHUOMVSWAI(A3DRealWAI):
+class WHUWHUOMVSWAI(UAVFF3DRealWAI):
     """
     WHUMVS WHUOMVS dataset containing object-centric and birds-eye-view scenes.
     """

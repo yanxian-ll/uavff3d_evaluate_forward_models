@@ -741,7 +741,7 @@ def _local_median_mad_mask_2d(
     min_neighbors: int = 4,
 ):
     """
-    对单张 2D 图做局部 median + MAD 过滤。
+    Apply local median and MAD filtering to a single 2D map.
     x2d: (H,W)
     valid2d: (H,W) bool
     return: refined_valid2d
@@ -815,11 +815,11 @@ def _mask_outliers_per_batch(
     global_mad_scale_range: float = 6.0,
 ):
     """
-    更稳健的离群点过滤：
-    1) 去掉非有限值 / 非正深度
-    2) 深度和空间距离做双边分位裁剪（尤其裁掉异常近点）
-    3) 对 z-depth 和 point-range 做局部 median+MAD 过滤
-    4) 再做一次全局 MAD 过滤
+    Robust outlier filtering:
+    1) Remove non-finite values and non-positive depths.
+    2) Apply two-sided quantile clipping to depth and spatial range, especially extremely near outliers.
+    3) Apply local median+MAD filtering to z-depth and point range.
+    4) Apply one additional global MAD filter.
     """
     mask = base_mask.clone().bool()
     B = pts_world.shape[0]
@@ -841,7 +841,7 @@ def _mask_outliers_per_batch(
             mask[b] = m
             continue
 
-        # ---------- 1) 双边分位裁剪 ----------
+        # ---------- 1) Two-sided quantile clipping ----------
         z_valid = z[m]
         r_valid = r_world[m]
 
@@ -863,8 +863,8 @@ def _mask_outliers_per_batch(
             mask[b] = m
             continue
 
-        # ---------- 2) 局部一致性过滤 ----------
-        # 对 log-depth / log-range 做局部检测更稳
+        # ---------- 2) Local consistency filtering ----------
+        # Local checks on log-depth and log-range are more stable.
         log_z = torch.zeros_like(z)
         log_r = torch.zeros_like(r_world)
         log_z[m] = torch.log(torch.clamp(z[m], min=1e-6))
@@ -882,7 +882,7 @@ def _mask_outliers_per_batch(
             mask[b] = m
             continue
 
-        # ---------- 3) 全局 MAD 补充过滤 ----------
+        # ---------- 3) Additional global MAD filtering ----------
         z_valid = log_z[m]
         r_valid = log_r[m]
 

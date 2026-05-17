@@ -1,22 +1,10 @@
-A3D-Bench Evaluate Forward Models
+UAVFF3D Fine-tuning and Evaluation Code
 
-This repository contains code adapted from MapAnything:
+This project contains code derived from or adapted to work with the MapAnything framework.
+The main project source is distributed under the Apache License 2.0.
 
-  MapAnything: Universal Feed-Forward Metric 3D Reconstruction
-  https://github.com/facebookresearch/map-anything
-  Copyright 2025 Meta
-  Licensed under the Apache License, Version 2.0.
+Vendored third-party projects:
+- third_party/HunyuanWorld-Mirror
+- third_party/depth-anything-3
 
-Modifications and additions for A3D-Bench:
-
-  Copyright 2026 A3D-Bench Authors
-  Licensed under the Apache License, Version 2.0, except where otherwise noted.
-
-The repository also includes modified third-party projects under:
-
-  third_party/mapabase
-  third_party/depth-anything-3
-  third_party/HunyuanWorld-Mirror
-
-Those projects retain their own license notices. In particular, HunyuanWorld-Mirror is governed by the Tencent
-HunyuanWorld-Mirror Community License Agreement included in its directory, not by the root Apache-2.0 license.
+Each vendored project keeps its upstream license and notice files. Those licenses apply to the corresponding files and may differ from the main project license.

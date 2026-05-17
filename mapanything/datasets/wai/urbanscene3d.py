@@ -5,10 +5,10 @@ UrbanScene3D Dataset using WAI format data.
 import os
 import numpy as np
 
-from mapanything.datasets.wai.a3dreal import A3DRealWAI
+from mapanything.datasets.wai.uavff3d_real import UAVFF3DRealWAI
 
 
-class UrbanScene3DWAI(A3DRealWAI):
+class UrbanScene3DWAI(UAVFF3DRealWAI):
     """
     UrbanScene3D dataset.
     """

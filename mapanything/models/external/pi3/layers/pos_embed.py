@@ -183,7 +183,7 @@ class RoPE2D(torch.nn.Module):
                     f"tokens_shape={tuple(tokens.shape)}"
                 )
 
-            # 只在 positions 是浮点时检查 NaN/Inf
+            # Check NaN/Inf only when positions are floating point values.
             if torch.is_floating_point(positions):
                 if not bool(torch.isfinite(positions).all().item()):
                     raise RuntimeError(
